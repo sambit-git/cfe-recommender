@@ -1,4 +1,7 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
+
+from ratings.models import Rating
 
 # Create your models here.
 class Movie(models.Model):
@@ -7,3 +10,7 @@ class Movie(models.Model):
     release_date =  models.DateTimeField(null=True, blank=True,
                         auto_now=False, auto_now_add=False)
     timestamp = models.DateTimeField(auto_now_add=True)
+    ratings = GenericRelation(Rating)
+    
+    def calculate_ratings_count(self):
+        return self.ratings.all().count()
