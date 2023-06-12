@@ -19,6 +19,6 @@ Navigate to the directory where you want to store this project and then **run th
  - unzip the downloaded dataset
  - copy the file "movies_metadata.csv" to src/data
  - Then again run the below commands
- - python manage.py loader --users 1000 --show-total
- - python manage.py loader --movies 100 --show-total
+ - python manage.py loader --users 5000 --show-total
+ - python manage.py loader --movies 10000 --show-total
  - python manage.py fake_ratings 1000 --users 1000 --show-total
