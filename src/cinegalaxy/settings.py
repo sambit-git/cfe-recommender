@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Third-party Apps
+    'django_celery_beat', # scheduler
+    'django_celery_results', # saves our task results
     # My Apps
     'movies',
     'profiles',
@@ -55,6 +58,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'cinegalaxy.urls'
+
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"
+CELERY_BROKER_URL = "redis://localhost:1234"
+CELERY_RESULT_BACKEND = "django-db"
 
 TEMPLATES = [
     {
