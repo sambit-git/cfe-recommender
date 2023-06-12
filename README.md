@@ -7,6 +7,7 @@ Navigate to the directory where you want to store this project and then **run th
  - git clone https://github.com/sambit-git/cfe-recommender
  - cd cfe-recommender
  - python -m venv venv
+ - .\venv\Scripts\Activate.ps1
  - pip install -r requirements.txt
  - cd src
  - mkdir data
