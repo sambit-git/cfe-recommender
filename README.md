@@ -24,7 +24,7 @@ Navigate to the directory where you want to store this project and then **run th
  - python manage.py loader --movies 10000 --show-total
  - python manage.py fake_ratings 1000 --users 1000 --show-total
 
-## Redis Installation and Running (Tried in Ubuntu 22.04.2 LTS)
+## Redis Installation(Tried in Ubuntu 22.04.2 LTS)
  - [Download Redis](https://github.com/redis/redis/archive/7.0.11.tar.gz) 
  - cd &lt;redis downloaded directory&gt;
  - tar -xzf redis-7.0.11.tar.gz
@@ -34,6 +34,48 @@ Navigate to the directory where you want to store this project and then **run th
  - make BUILD_TLS=yes
  - sudo make test install &lt;after tis redis-server will be accessible from any directory&gt;
  - `make distclean` <- Run this if stuck at anyplace in running above instructions and retry
+
+## Run and Verify Redis(Tried in Ubuntu 22.04.2 LTS)
+ ```
+ In Terminal-1
+  > redis-server
+    ...
+                    _._                                                  
+            _.-``__ ''-._                                             
+        _.-``    `.  `_.  ''-._           Redis 7.0.11 (00000000/0) 64 bit
+    .-`` .-```.  ```\/    _.,_ ''-._                                  
+    (    '      ,       .-`  | `,    )     Running in standalone mode
+    |`-._`-...-` __...-.``-._|'` _.-'|     Port: 6379
+    |    `-._   `._    /     _.-'    |     PID: 30106
+    `-._    `-._  `-./  _.-'    _.-'                                   
+    |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+    |    `-._`-._        _.-'_.-'    |           https://redis.io       
+    `-._    `-._`-.__.-'_.-'    _.-'                                   
+    |`-._`-._    `-.__.-'    _.-'_.-'|                                  
+    |    `-._`-._        _.-'_.-'    |                                  
+    `-._    `-._`-.__.-'_.-'    _.-'                                   
+        `-._    `-.__.-'    _.-'                                       
+            `-._        _.-'                                           
+                `-.__.-'                                               
+
+    ... * Ready to accept connections
+    <After this you can close this tab, if you terminal, but don't close the service using Ctrl+C>
+ ```
+ ```
+ In Terminal-2
+    (venv) sambit...$ redis-cli
+    127.0.0.1:6379> PING
+    PONG
+    127.0.0.1:6379> set foo bar
+    OK
+    127.0.0.1:6379> get foo
+    "bar"
+    127.0.0.1:6379> incr mycounter
+    (integer) 1
+    127.0.0.1:6379> decr mycounter
+    (integer) 0
+    127.0.0.1:6379> <Ctrl+C to exit redis-cli>
+ ```
 
 ## Start Celery (to run periodic tasks)
 - celery -A cinegalaxy worker -l info --beat
