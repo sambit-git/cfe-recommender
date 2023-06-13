@@ -3,7 +3,7 @@ from django.core.management.base import BaseCommand, CommandParser
 from movies.models import Movie
 from ratings.models import Rating
 
-from movies.task import task_claculate_movie_rating
+from src.movies.tasks import task_claculate_movie_rating
 
 class Command(BaseCommand):
     

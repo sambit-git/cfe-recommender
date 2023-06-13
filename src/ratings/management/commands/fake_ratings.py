@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from movies.models import Movie
 from ratings.models import Rating
 
-from ratings.task import generate_fake_reviews
+from src.ratings.tasks import generate_fake_reviews
 
 User = get_user_model()
 
