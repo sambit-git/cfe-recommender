@@ -9,3 +9,11 @@ app = Celery("cinegalaxy")
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
 app.autodiscover_tasks()
+
+app.conf.beat_schedule = {
+    "run-movie-rating-every-30": {
+        'task': 'task_claculate_movie_rating',
+        'schedule': 60 * 30, # every 30 minutes
+        'kwargs': { "count": 20_000 }
+    }
+}
