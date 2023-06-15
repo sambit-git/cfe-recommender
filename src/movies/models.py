@@ -7,6 +7,8 @@ from django.utils import timezone
 
 from ratings.models import Rating
 
+from movies import app_name
+
 RATING_UPDATE_PERIOD_IN_DAYS = 1
 
 class MovieQuerySet(models.QuerySet):
@@ -46,6 +48,9 @@ class Movie(models.Model):
     ratings_total = models.IntegerField(null=True, blank=True)
     
     objects = MovieManager()
+
+    def get_absolute_url(self):
+        return f"/{app_name}/{self.id}/"
     
     def __str__(self) -> str:
         if not self.release_date:
