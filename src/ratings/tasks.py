@@ -1,9 +1,13 @@
-from celery import shared_task
 import random
+from celery import shared_task
+
+from django.db.models import Avg, Count
 from django.contrib.auth import get_user_model
 
-from movies.models import Movie
+from django.contrib.contenttypes.models import ContentType
+from django.utils import timezone
 
+from movies.models import Movie
 from .models import Rating, RatingChoice
 
 User = get_user_model()
@@ -31,3 +35,26 @@ def generate_fake_reviews(count=100, users=10, null_avg=False):
         )
         new_ratings.append(rating_obj.id)
     return new_ratings
+
+
+@shared_task(name="task_update_movie_ratings")
+def task_update_movie_ratings(movie_id = None):
+    start = timezone.now()
+    ctype = ContentType.objects.get_for_model(Movie)
+
+    qs = Rating.objects.filter(content_type = ctype)
+    if movie_id is not None:
+        qs.filter(object_id = movie_id)
+
+    agg_ratings = qs.values('object_id').annotate(
+        average = Avg("value"),
+        count = Count('object_id'))
+    
+    for agg_rate in agg_ratings:
+        qs = Movie.objects.filter(id=agg_rate['object_id'])
+        qs.update(
+            rating_avg = agg_rate['average'],
+            ratings_total = agg_rate['count'],
+            rating_updated = timezone.now()
+        )
+    print(f"Time taken: {(timezone.now()- start).total_seconds()} seconds")

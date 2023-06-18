@@ -12,8 +12,7 @@ app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
     "run-movie-rating-every-30": {
-        'task': 'task_claculate_movie_rating',
+        'task': 'task_update_movie_ratings',
         'schedule': 60 * 30, # every 30 minutes
-        'kwargs': { "count": 20_000 }
     }
 }
